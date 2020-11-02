@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CategoryList from './components/CategoryList'
 import ArticleList from './components/ArticleList'
 import styled from 'styled-components'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
-import CreateArticleBtn from './components/CreateArticleBtn'
+import CreateArticle from './components/CreateArticle'
 import Logo from './components/Logo'
 import Search from './components/Search'
 import Pagination from './components/Pagination'
+import CreateCategory from './components/CreateCategory'
 
 function App() {
+  const [newRecord, setNewRecord] = useState()
+
   return (
     <ContainerStyled maxWidth="md">
       <Grid container spacing={8}>
@@ -19,13 +22,16 @@ function App() {
             <Logo />
           </Grid>
           <Grid item xs={8}>
-            <CreateArticleBtn />
+            <CreateArticle />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <Search />
           </Grid>
           <Grid item xs={12}>
-            <CategoryList />
+            <CategoryList newRecord={newRecord} />
+          </Grid>
+          <Grid item xs={8}>
+            <CreateCategory setNewRecord={setNewRecord} />
           </Grid>
         </Grid>
 
@@ -42,5 +48,5 @@ export default App
 
 // Styles
 const ContainerStyled = styled(Container)`
-  margin-top: 5rem;
+  margin-top: 7rem;
 `

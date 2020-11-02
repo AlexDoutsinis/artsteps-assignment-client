@@ -9,11 +9,16 @@ function req() {
       .join('&')
 
     const result = await axios.get(`${baseURl}/${route}?${queryString}`)
-    const data = await result.data
-    return data
+    return result.data
   }
 
-  return { getAxios }
+  async function postAxios(route, payload = {}) {
+    const result = await axios.post(`${baseURl}/${route}`, payload)
+
+    return result.data
+  }
+
+  return { getAxios, postAxios }
 }
 
 export default req

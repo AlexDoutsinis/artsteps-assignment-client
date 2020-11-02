@@ -21,7 +21,7 @@ const useAsync = (asyncFunction, delay = 0) => {
 
         setPending(false)
       })
-  }, [asyncFunction])
+  }, [asyncFunction, delay])
 
   return { execute, pending, value, error }
 }

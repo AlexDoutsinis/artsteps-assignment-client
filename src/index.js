@@ -8,11 +8,11 @@ import theme from './theme'
 import 'fontsource-roboto'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <App />
     </MuiThemeProvider>
-  </React.StrictMode>,
+  </>,
   document.getElementById('root'),
 )
