@@ -1,50 +1,45 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 
 import req from '../utils/req'
 import useAsync from '../hooks/useAsync'
+import Modal from './Modal'
+import { useCategoryReducer, actionCreators } from '../reducers/categoryReducer'
 
 const { postAxios } = req()
 
-function CreateCategory({ setNewRecord }) {
-  const [open, setOpen] = useState(false)
-  const [category, setCategory] = useState('')
-  const [message, setMessage] = useState('')
+function CreateCategory({ setReRender }) {
+  const { state, dispatch } = useCategoryReducer()
   const { execute, value, error } = useAsync(postCategory)
 
+  const { message, isOpen, category } = state
+  const { onSuccess, onFailure, onChange, onClose, onOpen } = actionCreators()
+
   useEffect(() => {
-    if (value) {
-      setMessage('Category just created')
-      return setNewRecord(record => !record)
+    if (value && value.status == 201) {
+      dispatch(onSuccess('Category just created'))
+      return setReRender(state => !state)
     }
-    if (error) return setMessage('Category already exists')
+    if (error) return dispatch(onFailure('Category already exists'))
   }, [value, error])
 
   function handleClickOpen() {
-    setOpen(true)
+    dispatch(onOpen())
   }
 
   function handleClose() {
-    setOpen(false)
-    setMessage('')
-    setCategory('')
+    dispatch(onClose())
   }
 
   function handleInputChange(e) {
-    setCategory(e.target.value)
+    dispatch(onChange(e.target.value))
   }
 
   async function postCategory() {
     const res = await postAxios('/categories', {
       name: category,
     })
-
     return res
   }
 
@@ -54,35 +49,14 @@ function CreateCategory({ setNewRecord }) {
         Create category
       </ButtonStyled>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        fullWidth
-      >
-        <DialogTitle id="form-dialog-title">Create Category</DialogTitle>
-        <DialogContent>
-          {message}
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Category Name"
-            type="email"
-            fullWidth
-            value={category}
-            onChange={handleInputChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={execute} color="primary">
-            Create
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Modal
+        open={isOpen}
+        handleClose={handleClose}
+        onClick={execute}
+        handleInputChange={handleInputChange}
+        message={message}
+        category={category}
+      />
     </>
   )
 }

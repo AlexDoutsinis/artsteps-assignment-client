@@ -10,9 +10,10 @@ import Logo from './components/Logo'
 import Search from './components/Search'
 import Pagination from './components/Pagination'
 import CreateCategory from './components/CreateCategory'
+import DeleteCategory from './components/DeleteCategory'
 
 function App() {
-  const [newRecord, setNewRecord] = useState()
+  const [reRender, setReRender] = useState(false)
 
   return (
     <ContainerStyled maxWidth="md">
@@ -28,10 +29,13 @@ function App() {
             <Search />
           </Grid>
           <Grid item xs={12}>
-            <CategoryList newRecord={newRecord} />
+            <CategoryList reRender={reRender} />
           </Grid>
           <Grid item xs={8}>
-            <CreateCategory setNewRecord={setNewRecord} />
+            <CreateCategory setReRender={setReRender} />
+          </Grid>
+          <Grid item xs={8}>
+            <DeleteCategory />
           </Grid>
         </Grid>
 

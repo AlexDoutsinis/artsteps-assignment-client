@@ -7,12 +7,12 @@ import Category from './Category'
 
 const { getAxios } = req()
 
-function CategoryList({ newRecord }) {
+function CategoryList({ reRender }) {
   const { execute, value: categoryList } = useAsync(getCategoryList)
 
   useEffect(() => {
     execute()
-  }, [newRecord])
+  }, [reRender])
 
   async function getCategoryList() {
     const categories = await getAxios('categories')
