@@ -46,6 +46,13 @@ function categoryReducer(state, action) {
     }
   }
 
+  if (action.type === 'setMessage') {
+    return {
+      ...state,
+      message: action.payload,
+    }
+  }
+
   return state
 }
 
@@ -76,5 +83,9 @@ export function actionCreators() {
     return { type: 'onOpen' }
   }
 
-  return { onSuccess, onFailure, onChange, onClose, onOpen }
+  function setMessage(payload = {}) {
+    return { type: 'setMessage', payload }
+  }
+
+  return { onSuccess, onFailure, onChange, onClose, onOpen, setMessage }
 }

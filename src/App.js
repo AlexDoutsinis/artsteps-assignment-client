@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Hidden from '@material-ui/core/Hidden'
+import { Switch, Route } from 'react-router-dom'
 
 import CreateArticle from './components/CreateArticle'
 import Logo from './components/Logo'
@@ -12,6 +13,7 @@ import Search from './components/Search'
 import Pagination from './components/Pagination'
 import CreateCategory from './components/CreateCategory'
 import DeleteCategory from './components/DeleteCategory'
+import ArticleDetails from './components/ArticleDetails'
 
 function App() {
   const [reRender, setReRender] = useState(false)
@@ -42,16 +44,16 @@ function App() {
           </Grid>
         </Hidden>
 
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          container
-          direction="column"
-          alignItems="center"
-        >
-          <ArticleList />
-          <Pagination />
+        <Grid item xs={12} sm={8}>
+          <Switch>
+            <Route exact path="/">
+              <ArticleList />
+              <Pagination />
+            </Route>
+            <Route path="/articles/:slug">
+              <ArticleDetails />
+            </Route>
+          </Switch>
         </Grid>
       </Grid>
     </ContainerStyled>

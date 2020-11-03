@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import TextField from '@material-ui/core/TextField'
 
 import req from '../utils/req'
 import useAsync from '../hooks/useAsync'
@@ -13,7 +14,14 @@ function CreateCategory({ setReRender }) {
   const { execute, value, error } = useAsync(postCategory)
 
   const { message, isOpen, category } = state
-  const { onSuccess, onFailure, onChange, onClose, onOpen } = actionCreators()
+  const {
+    onSuccess,
+    onFailure,
+    onChange,
+    onClose,
+    onOpen,
+    setMessage,
+  } = actionCreators()
 
   useEffect(() => {
     if (value && value.status == 201) {
@@ -22,6 +30,12 @@ function CreateCategory({ setReRender }) {
     }
     if (error) return dispatch(onFailure('Category already exists'))
   }, [value, error])
+
+  function onExecute() {
+    if (!category) return dispatch(setMessage('Name is required'))
+
+    execute()
+  }
 
   async function postCategory() {
     const res = await postAxios('categories', {
@@ -51,12 +65,21 @@ function CreateCategory({ setReRender }) {
       <Modal
         open={isOpen}
         handleClose={handleClose}
-        onClick={execute}
-        handleInputChange={handleInputChange}
+        onExecute={onExecute}
         message={message}
-        category={category}
         title="Create category"
-      />
+      >
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Category Name"
+          type="text"
+          fullWidth
+          value={category}
+          onChange={handleInputChange}
+        />
+      </Modal>
     </>
   )
 }

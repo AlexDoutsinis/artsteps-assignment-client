@@ -1,21 +1,13 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 function Modal(props) {
-  const {
-    open,
-    handleClose,
-    onClick,
-    handleInputChange,
-    message,
-    category,
-    title,
-  } = props
+  const { open, handleClose, onExecute, message, title, children: body } = props
 
   return (
     <Dialog
@@ -26,23 +18,16 @@ function Modal(props) {
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        {message}
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Category Name"
-          type="email"
-          fullWidth
-          value={category}
-          onChange={handleInputChange}
-        />
+        <Typography variant="body2" color="primary">
+          {message}
+        </Typography>
+        {body}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={onClick} color="primary">
+        <Button onClick={onExecute} color="primary">
           Create
         </Button>
       </DialogActions>
