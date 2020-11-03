@@ -4,6 +4,7 @@ import ArticleList from './components/ArticleList'
 import styled from 'styled-components'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
+import Hidden from '@material-ui/core/Hidden'
 
 import CreateArticle from './components/CreateArticle'
 import Logo from './components/Logo'
@@ -18,28 +19,37 @@ function App() {
   return (
     <ContainerStyled maxWidth="md">
       <Grid container spacing={8}>
-        <Grid item xs={4}>
-          <Grid item xs={8}>
-            <Logo />
+        <Hidden xsDown>
+          <Grid item sm={4}>
+            <Grid item xs={8}>
+              <Logo />
+            </Grid>
+            <Grid item xs={8}>
+              <CreateArticle />
+            </Grid>
+            <Grid item xs={8}>
+              <Search />
+            </Grid>
+            <Grid item xs={12}>
+              <CategoryList reRender={reRender} />
+            </Grid>
+            <Grid item xs={8}>
+              <CreateCategory setReRender={setReRender} />
+            </Grid>
+            <Grid item xs={8}>
+              <DeleteCategory setReRender={setReRender} />
+            </Grid>
           </Grid>
-          <Grid item xs={8}>
-            <CreateArticle />
-          </Grid>
-          <Grid item xs={8}>
-            <Search />
-          </Grid>
-          <Grid item xs={12}>
-            <CategoryList reRender={reRender} />
-          </Grid>
-          <Grid item xs={8}>
-            <CreateCategory setReRender={setReRender} />
-          </Grid>
-          <Grid item xs={8}>
-            <DeleteCategory setReRender={setReRender} />
-          </Grid>
-        </Grid>
+        </Hidden>
 
-        <Grid item xs={8}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          container
+          direction="column"
+          alignItems="center"
+        >
           <ArticleList />
           <Pagination />
         </Grid>
