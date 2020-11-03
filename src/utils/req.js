@@ -25,10 +25,10 @@ function req() {
     return await httpRequest({ method: 'post', url, payload })
   }
 
-  async function deleteAxios(route, payload) {
-    const url = `${baseURl}/${route}`
+  async function deleteAxios(route) {
+    const url = encodeURI(`${baseURl}/${route}`)
 
-    return await httpRequest({ method: 'delete', url, payload })
+    return await httpRequest({ method: 'delete', url })
   }
 
   async function patchAxios(route, payload) {

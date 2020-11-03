@@ -35,7 +35,7 @@ function App() {
             <CreateCategory setReRender={setReRender} />
           </Grid>
           <Grid item xs={8}>
-            <DeleteCategory />
+            <DeleteCategory setReRender={setReRender} />
           </Grid>
         </Grid>
 

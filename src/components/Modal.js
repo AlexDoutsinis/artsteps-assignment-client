@@ -14,6 +14,7 @@ function Modal(props) {
     handleInputChange,
     message,
     category,
+    title,
   } = props
 
   return (
@@ -23,7 +24,7 @@ function Modal(props) {
       aria-labelledby="form-dialog-title"
       fullWidth
     >
-      <DialogTitle id="form-dialog-title">Create Category</DialogTitle>
+      <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
         {message}
         <TextField

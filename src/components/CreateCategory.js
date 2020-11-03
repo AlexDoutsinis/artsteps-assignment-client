@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
+import React, { useEffect } from 'react'
 
 import req from '../utils/req'
 import useAsync from '../hooks/useAsync'
 import Modal from './Modal'
+import ModalButton from './ModalButton'
 import { useCategoryReducer, actionCreators } from '../reducers/categoryReducer'
 
 const { postAxios } = req()
@@ -24,6 +23,13 @@ function CreateCategory({ setReRender }) {
     if (error) return dispatch(onFailure('Category already exists'))
   }, [value, error])
 
+  async function postCategory() {
+    const res = await postAxios('categories', {
+      name: category,
+    })
+    return res
+  }
+
   function handleClickOpen() {
     dispatch(onOpen())
   }
@@ -36,18 +42,11 @@ function CreateCategory({ setReRender }) {
     dispatch(onChange(e.target.value))
   }
 
-  async function postCategory() {
-    const res = await postAxios('/categories', {
-      name: category,
-    })
-    return res
-  }
-
   return (
     <>
-      <ButtonStyled variant="outlined" onClick={handleClickOpen}>
+      <ModalButton variant="outlined" onClick={handleClickOpen}>
         Create category
-      </ButtonStyled>
+      </ModalButton>
 
       <Modal
         open={isOpen}
@@ -56,13 +55,9 @@ function CreateCategory({ setReRender }) {
         handleInputChange={handleInputChange}
         message={message}
         category={category}
+        title="Create category"
       />
     </>
   )
 }
 export default CreateCategory
-
-// Styles
-const ButtonStyled = styled(Button)`
-  margin-top: 2rem;
-`
