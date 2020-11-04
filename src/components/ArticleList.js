@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 
 import Article from './Article'
@@ -6,23 +6,25 @@ import { useArticleContext } from '../contexts/articleContext'
 import AlertMessage from './AlertMessage'
 
 function ArticleList() {
-  const [deleteMessage, setDeleteMessage] = useState('')
-  const [open, setOpen] = useState(false)
-  const { articleList } = useArticleContext()
+  const {
+    articleList,
+    alertMessage,
+    setAlertMessage,
+    isAlertOpen,
+    setIsAlertOpen,
+  } = useArticleContext()
 
   function showDeleteMessage(message) {
-    setOpen(true)
-    setDeleteMessage(message)
+    setIsAlertOpen(true)
+    setAlertMessage(message)
   }
-
-  // if (!articleList.articles) return null
 
   return (
     <>
       <AlertMessage
-        open={open}
-        setOpen={setOpen}
-        deleteMessage={deleteMessage}
+        open={isAlertOpen}
+        setOpen={setIsAlertOpen}
+        message={alertMessage}
       />
       <Grid container spacing={3} direction="row">
         {articleList.map(article => (

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { useState, createContext, useContext } from 'react'
 
 import { useGetArticleList } from '../hooks/useGetArticleList'
 
@@ -14,6 +14,9 @@ const ArticleContext = createContext({
 })
 
 export function ArticleContextProvider({ children }) {
+  const [alertMessage, setAlertMessage] = useState('')
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
+
   const {
     articleList,
     totalPages,
@@ -36,6 +39,10 @@ export function ArticleContextProvider({ children }) {
         page,
         setPage,
         fetchArticleList,
+        alertMessage,
+        setAlertMessage,
+        isAlertOpen,
+        setIsAlertOpen,
       }}
     >
       {children}

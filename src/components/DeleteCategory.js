@@ -17,7 +17,9 @@ function DeleteCategory() {
   useEffect(() => {
     if (value && value.status == 204) {
       const newCategoryList = [...categoryList]
-      const filteredList = newCategoryList.filter(name => name !== categoryName)
+      const filteredList = newCategoryList.filter(
+        category => category.name !== categoryName,
+      )
       setCategoryList(filteredList)
       return setMessage('Category just deleted')
     }

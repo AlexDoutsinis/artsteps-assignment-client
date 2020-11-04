@@ -49,7 +49,7 @@ function Article({ article, showDeleteMessage }) {
         item => item._id !== article._id,
       )
       setArticleList(filteredList)
-      return showDeleteMessage(`Deletion was successfully`)
+      return showDeleteMessage(`Deletion was successful`)
     }
     if (deleteErr) return showDeleteMessage('deletion failed')
   }, [deleteRes, deleteErr])
@@ -95,7 +95,7 @@ function Article({ article, showDeleteMessage }) {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="primary">
-              {article.category}
+              {article.category && article.category.name}
             </Typography>
           </Grid>
           <Grid item xs={12}>

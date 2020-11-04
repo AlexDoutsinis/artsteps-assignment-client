@@ -18,42 +18,40 @@ import { CategoryContextProvider } from './contexts/categoryContext'
 import { ArticleContextProvider } from './contexts/articleContext'
 
 function App() {
-  const [reRender, setReRender] = useState(false)
-
   return (
     <ContainerStyled maxWidth="md">
       <Grid container spacing={8}>
-        <Hidden xsDown>
-          <Grid item sm={4}>
-            <Grid item xs={8}>
-              <Logo />
-            </Grid>
-            <Grid item xs={8}>
-              <CreateArticle />
-            </Grid>
-            <Grid item xs={8}>
-              <Search />
-            </Grid>
-            <CategoryContextProvider>
-              <Grid item xs={12}>
-                <CategoryList />
-              </Grid>
-              <Grid item xs={8}>
-                <CreateCategory />
-              </Grid>
-              <Grid item xs={8}>
-                <DeleteCategory />
-              </Grid>
-            </CategoryContextProvider>
-          </Grid>
-        </Hidden>
-
         <ArticleContextProvider>
+          <Hidden xsDown>
+            <Grid item sm={4}>
+              <Grid item xs={8}>
+                <Logo />
+              </Grid>
+              <CategoryContextProvider>
+                <Grid item xs={8}>
+                  <CreateArticle />
+                </Grid>
+                <Grid item xs={8}>
+                  <Search />
+                </Grid>
+                <Grid item xs={12}>
+                  <CategoryList />
+                </Grid>
+                <Grid item xs={8}>
+                  <CreateCategory />
+                </Grid>
+                <Grid item xs={8}>
+                  <DeleteCategory />
+                </Grid>
+              </CategoryContextProvider>
+            </Grid>
+          </Hidden>
+
           <Grid item xs={12} sm={8}>
             <Switch>
               <Route exact path="/">
                 <Grid container direction="column" alignItems="center">
-                  <ArticleList setReRender={setReRender} reRender={reRender} />
+                  <ArticleList />
                   <Pagination />
                 </Grid>
               </Route>
