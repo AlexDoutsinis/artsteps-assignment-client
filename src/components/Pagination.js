@@ -8,24 +8,20 @@ import { useArticleContext } from '../contexts/articleContext'
 
 function Pagination() {
   const {
-    articleList,
-    pending,
-    page,
+    totalPages,
+    currentPage,
     setPage,
     fetchArticleList,
   } = useArticleContext()
-  const { totalPages } = articleList
 
   function handleChange(event, value) {
-    fetchArticleList()
-
-    return setPage(value)
+    setPage(value)
+    return fetchArticleList()
   }
 
-  if (pending) return null
   return (
     <PagingStyled
-      page={page}
+      page={currentPage}
       count={totalPages}
       onChange={handleChange}
       color="primary"

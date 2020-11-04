@@ -6,12 +6,18 @@ const ArticleContext = createContext({
   articleList: [],
   setArticleList: null,
   pending: false,
+  page: null,
   setPage: null,
+  totalPages: null,
+  currentPage: null,
+  fetchArticleList: null,
 })
 
 export function ArticleContextProvider({ children }) {
   const {
     articleList,
+    totalPages,
+    currentPage,
     setArticleList,
     pending,
     page,
@@ -23,6 +29,8 @@ export function ArticleContextProvider({ children }) {
     <ArticleContext.Provider
       value={{
         articleList,
+        totalPages,
+        currentPage,
         setArticleList,
         pending,
         page,

@@ -7,11 +7,17 @@ const { getAxios } = req()
 
 export function useGetArticleList() {
   const [articleList, setArticleList] = useState([])
+  const [totalPages, setTotalPages] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
   const [page, setPage] = useState(1)
   const { execute, pending, value } = useAsync(getArticleList)
 
   useEffect(() => {
-    if (value) return setArticleList(value)
+    if (value) {
+      setTotalPages(value.totalPages)
+      setCurrentPage(value.currentPage)
+      return setArticleList(value.articles)
+    }
     execute()
   }, [value, page])
 
@@ -20,9 +26,10 @@ export function useGetArticleList() {
   }
   return {
     articleList,
+    totalPages,
+    currentPage,
     setArticleList,
     pending,
-    page,
     setPage,
     fetchArticleList: execute,
   }

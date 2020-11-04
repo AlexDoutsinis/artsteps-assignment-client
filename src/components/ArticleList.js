@@ -15,7 +15,7 @@ function ArticleList() {
     setDeleteMessage(message)
   }
 
-  if (!articleList.articles) return null
+  // if (!articleList.articles) return null
 
   return (
     <>
@@ -25,7 +25,7 @@ function ArticleList() {
         deleteMessage={deleteMessage}
       />
       <Grid container spacing={3} direction="row">
-        {articleList.articles.map(article => (
+        {articleList.map(article => (
           <Article
             key={article._id}
             article={article}

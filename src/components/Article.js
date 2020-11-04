@@ -33,6 +33,9 @@ function Article({ article, showDeleteMessage }) {
       const newArticleList = [...articleList]
       const index = newArticleList.findIndex(item => item._id === article._id)
       newArticleList[index].content = content
+
+      console.log(`newArticleList[index]: ${newArticleList[index].content}`)
+
       setArticleList(newArticleList)
       return setMessage('Content just updated')
     }
