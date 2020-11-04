@@ -12,11 +12,7 @@ function CategorySelect({ categoryId, setCategoryId }) {
   }
 
   return (
-    <Select
-      value={categoryId || categoryList[0]._id}
-      onChange={handleChange}
-      color="primary"
-    >
+    <Select value={categoryId} onChange={handleChange} color="primary">
       {categoryList.map(category => (
         <MenuItem key={category._id} value={category._id}>
           {category.name}

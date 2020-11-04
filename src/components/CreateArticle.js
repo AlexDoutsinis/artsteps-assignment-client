@@ -37,7 +37,7 @@ function CreateArticle() {
       handleClose()
       return successAlert()
     }
-    if (error) return setMessage('Something went wrong')
+    if (error) return setMessage('Pick category')
   }, [value, error])
 
   function successAlert() {

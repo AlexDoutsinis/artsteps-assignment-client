@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { useParams } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 
 import req from '../utils/req'
 import useAsync from '../hooks/useAsync'
@@ -31,7 +32,7 @@ function ArticleDetails() {
         <p>Published {new Date(article.createdAt).toDateString()}</p>
       </Grid>
       <Grid item xs={12}>
-        <p>{article.content}</p>
+        <ReactMarkdown>{article.content}</ReactMarkdown>
       </Grid>
     </Grid>
   )
