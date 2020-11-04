@@ -8,8 +8,9 @@ import TextField from '@material-ui/core/TextField'
 import Modal from './Modal'
 import { useArticleContext } from '../contexts/articleContext'
 import { usePatchArticle } from '../hooks/usePatchArticle'
+import { useDeleteArticle } from '../hooks/useDeleteArticle'
 
-function Article({ article }) {
+function Article({ article, showDeleteMessage }) {
   const [message, setMessage] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [content, setContent] = useState('')
@@ -17,6 +18,13 @@ function Article({ article }) {
   const { execute, value, error } = usePatchArticle({
     slug: article.slug,
     content,
+  })
+  const {
+    execute: deleteArticle,
+    value: deleteRes,
+    error: deleteErr,
+  } = useDeleteArticle({
+    slug: article.slug,
   })
   const { articleList, setArticleList } = useArticleContext()
 
@@ -31,6 +39,18 @@ function Article({ article }) {
     if (error) return setMessage('Something went wrong')
   }, [value, error])
 
+  useEffect(() => {
+    if (deleteRes && deleteRes.status == 204) {
+      const newArticleList = [...articleList]
+      const filteredList = newArticleList.filter(
+        item => item._id !== article._id,
+      )
+      setArticleList(filteredList)
+      return showDeleteMessage(`Deletion was successfully`)
+    }
+    if (deleteErr) return showDeleteMessage('deletion failed')
+  }, [deleteRes, deleteErr])
+
   function onExecute() {
     if (!content) return setMessage('Content is required')
     execute()
@@ -39,6 +59,10 @@ function Article({ article }) {
   function handleClickEdit() {
     setIsOpen(true)
     setContent(article.content)
+  }
+
+  function handleClickDelete() {
+    deleteArticle(article.slug)
   }
 
   function handleClose() {
@@ -75,7 +99,7 @@ function Article({ article }) {
             <TextStyled onClick={handleClickEdit}>Edit</TextStyled>
           </Grid>
           <Grid item xs={12}>
-            <TextStyled>Delete</TextStyled>
+            <TextStyled onClick={handleClickDelete}>Delete</TextStyled>
           </Grid>
         </Grid>
       </GridStyled>
