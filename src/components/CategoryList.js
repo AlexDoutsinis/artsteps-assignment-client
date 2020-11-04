@@ -1,26 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 
-import useAsync from '../hooks/useAsync'
-import req from '../utils/req'
 import Category from './Category'
+import { useCategoryContext } from '../contexts/categoryContext'
 
-const { getAxios } = req()
-
-function CategoryList({ reRender }) {
-  const { execute, value: categoryList } = useAsync(getCategoryList)
-
-  useEffect(() => {
-    execute()
-  }, [reRender])
-
-  async function getCategoryList() {
-    const categories = await getAxios('categories')
-
-    return categories
-  }
-
-  if (!categoryList) return null
+function CategoryList() {
+  const { categoryList } = useCategoryContext()
 
   return (
     <Grid container spacing={1}>

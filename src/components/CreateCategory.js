@@ -1,64 +1,51 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextField from '@material-ui/core/TextField'
 
-import req from '../utils/req'
-import useAsync from '../hooks/useAsync'
 import Modal from './Modal'
 import ModalButton from './ModalButton'
-import { useCategoryReducer, actionCreators } from '../reducers/categoryReducer'
+import { useCreateCategory } from '../hooks/useCreateCategory'
+import { useCategoryContext } from '../contexts/categoryContext'
 
-const { postAxios } = req()
+function CreateCategory() {
+  const [categoryName, setCategoryName] = useState('')
+  const [message, setMessage] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
-function CreateCategory({ setReRender }) {
-  const { state, dispatch } = useCategoryReducer()
-  const { execute, value, error } = useAsync(postCategory)
-
-  const { message, isOpen, category } = state
-  const {
-    onSuccess,
-    onFailure,
-    onChange,
-    onClose,
-    onOpen,
-    setMessage,
-  } = actionCreators()
+  const { execute, value, error } = useCreateCategory(categoryName)
+  const { categoryList, setCategoryList } = useCategoryContext()
 
   useEffect(() => {
     if (value && value.status == 201) {
-      dispatch(onSuccess('Category just created'))
-      return setReRender(state => !state)
+      const newCategoryList = [...categoryList]
+      newCategoryList.push(value.data)
+      setCategoryList(newCategoryList)
+      return setMessage('Category just created')
     }
-    if (error) return dispatch(onFailure('Category already exists'))
+    if (error) return setMessage('Category already exists')
   }, [value, error])
 
   function onExecute() {
-    if (!category) return dispatch(setMessage('Name is required'))
-
+    if (!categoryName) return setMessage('Name is required')
     execute()
   }
 
-  async function postCategory() {
-    const res = await postAxios('categories', {
-      name: category,
-    })
-    return res
-  }
-
-  function handleClickOpen() {
-    dispatch(onOpen())
+  function handleOpen() {
+    setIsOpen(true)
   }
 
   function handleClose() {
-    dispatch(onClose())
+    setIsOpen(false)
+    setMessage('')
+    setCategoryName('')
   }
 
   function handleInputChange(e) {
-    dispatch(onChange(e.target.value))
+    setCategoryName(e.target.value)
   }
 
   return (
     <>
-      <ModalButton variant="outlined" onClick={handleClickOpen}>
+      <ModalButton variant="outlined" onClick={handleOpen}>
         Create category
       </ModalButton>
 
@@ -76,7 +63,7 @@ function CreateCategory({ setReRender }) {
           label="Category Name"
           type="text"
           fullWidth
-          value={category}
+          value={categoryName}
           onChange={handleInputChange}
         />
       </Modal>

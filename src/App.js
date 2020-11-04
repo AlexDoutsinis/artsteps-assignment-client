@@ -14,6 +14,8 @@ import Pagination from './components/Pagination'
 import CreateCategory from './components/CreateCategory'
 import DeleteCategory from './components/DeleteCategory'
 import ArticleDetails from './components/ArticleDetails'
+import { CategoryContextProvider } from './contexts/categoryContext'
+import { ArticleContextProvider } from './contexts/articleContext'
 
 function App() {
   const [reRender, setReRender] = useState(false)
@@ -32,29 +34,33 @@ function App() {
             <Grid item xs={8}>
               <Search />
             </Grid>
-            <Grid item xs={12}>
-              <CategoryList reRender={reRender} />
-            </Grid>
-            <Grid item xs={8}>
-              <CreateCategory setReRender={setReRender} />
-            </Grid>
-            <Grid item xs={8}>
-              <DeleteCategory setReRender={setReRender} />
-            </Grid>
+            <CategoryContextProvider>
+              <Grid item xs={12}>
+                <CategoryList />
+              </Grid>
+              <Grid item xs={8}>
+                <CreateCategory />
+              </Grid>
+              <Grid item xs={8}>
+                <DeleteCategory />
+              </Grid>
+            </CategoryContextProvider>
           </Grid>
         </Hidden>
 
-        <Grid item xs={12} sm={8}>
-          <Switch>
-            <Route exact path="/">
-              <ArticleList />
-              <Pagination />
-            </Route>
-            <Route path="/articles/:slug">
-              <ArticleDetails />
-            </Route>
-          </Switch>
-        </Grid>
+        <ArticleContextProvider>
+          <Grid item xs={12} sm={8}>
+            <Switch>
+              <Route exact path="/">
+                <ArticleList setReRender={setReRender} reRender={reRender} />
+                <Pagination />
+              </Route>
+              <Route path="/articles/:slug">
+                <ArticleDetails />
+              </Route>
+            </Switch>
+          </Grid>
+        </ArticleContextProvider>
       </Grid>
     </ContainerStyled>
   )

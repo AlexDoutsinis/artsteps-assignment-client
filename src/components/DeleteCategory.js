@@ -1,57 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextField from '@material-ui/core/TextField'
 
-import req from '../utils/req'
-import useAsync from '../hooks/useAsync'
 import Modal from './Modal'
 import ModalButton from './ModalButton'
-import { useCategoryReducer, actionCreators } from '../reducers/categoryReducer'
+import { useDeleteCategory } from '../hooks/useDeleteCategory'
+import { useCategoryContext } from '../contexts/categoryContext'
 
-const { deleteAxios } = req()
+function DeleteCategory() {
+  const [categoryName, setCategoryName] = useState('')
+  const [message, setMessage] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
-function DeleteCategory({ setReRender }) {
-  const { state, dispatch } = useCategoryReducer()
-  const { execute, value, error } = useAsync(deleteCategory)
-
-  const { message, isOpen, category } = state
-  const {
-    onSuccess,
-    onFailure,
-    onChange,
-    onClose,
-    onOpen,
-    setMessage,
-  } = actionCreators()
+  const { execute, value, error } = useDeleteCategory(categoryName)
+  const { categoryList, setCategoryList } = useCategoryContext()
 
   useEffect(() => {
     if (value && value.status == 204) {
-      dispatch(onSuccess('Category just deleted'))
-      return setReRender(state => !state)
+      const newCategoryList = [...categoryList]
+      const filteredList = newCategoryList.filter(name => name !== categoryName)
+      setCategoryList(filteredList)
+      return setMessage('Category just deleted')
     }
-    if (error) return dispatch(onFailure('Category not found'))
+    if (error) return setMessage('Category not found')
   }, [value, error])
 
   function onExecute() {
-    if (!category) return dispatch(setMessage('Name is required'))
-
+    if (!categoryName) return setMessage('Name is required')
     execute()
   }
 
-  async function deleteCategory() {
-    const res = await deleteAxios(`categories/${category}`)
-    return res
-  }
-
   function handleClickOpen() {
-    dispatch(onOpen())
+    setIsOpen(true)
   }
 
   function handleClose() {
-    dispatch(onClose())
+    setIsOpen(false)
+    setMessage('')
+    setCategoryName('')
   }
 
   function handleInputChange(e) {
-    dispatch(onChange(e.target.value))
+    setCategoryName(e.target.value)
   }
 
   return (
@@ -74,7 +63,7 @@ function DeleteCategory({ setReRender }) {
           label="Category Name"
           type="text"
           fullWidth
-          value={category}
+          value={categoryName}
           onChange={handleInputChange}
         />
       </Modal>

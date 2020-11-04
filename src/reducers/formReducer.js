@@ -4,10 +4,10 @@ const initialState = {
   message: '',
   reRender: false,
   isOpen: false,
-  category: '',
+  data: '',
 }
 
-function categoryReducer(state, action) {
+function formReducer(state, action) {
   if (action.type === 'success') {
     return {
       ...state,
@@ -26,7 +26,7 @@ function categoryReducer(state, action) {
   if (action.type === 'onChange') {
     return {
       ...state,
-      category: action.payload,
+      data: action.payload,
     }
   }
 
@@ -35,7 +35,7 @@ function categoryReducer(state, action) {
       ...state,
       isOpen: false,
       message: '',
-      category: '',
+      data: '',
     }
   }
 
@@ -43,6 +43,22 @@ function categoryReducer(state, action) {
     return {
       ...state,
       isOpen: true,
+    }
+  }
+
+  if (action.type === 'onOpenKeepData') {
+    return {
+      ...state,
+      isOpen: true,
+      data: action.payload,
+    }
+  }
+
+  if (action.type === 'onCloseKeepData') {
+    return {
+      ...state,
+      isOpen: false,
+      message: '',
     }
   }
 
@@ -56,8 +72,8 @@ function categoryReducer(state, action) {
   return state
 }
 
-export function useCategoryReducer() {
-  const [state, dispatch] = useReducer(categoryReducer, initialState)
+export function useFormReducer(intState = initialState) {
+  const [state, dispatch] = useReducer(formReducer, intState)
 
   return { state, dispatch }
 }
@@ -79,6 +95,14 @@ export function actionCreators() {
     return { type: 'onClose' }
   }
 
+  function onOpenKeepData(payload = {}) {
+    return { type: 'onOpenKeepData', payload }
+  }
+
+  function onCloseKeepData() {
+    return { type: 'onCloseKeepData' }
+  }
+
   function onOpen() {
     return { type: 'onOpen' }
   }
@@ -87,5 +111,14 @@ export function actionCreators() {
     return { type: 'setMessage', payload }
   }
 
-  return { onSuccess, onFailure, onChange, onClose, onOpen, setMessage }
+  return {
+    onSuccess,
+    onFailure,
+    onChange,
+    onClose,
+    onOpenKeepData,
+    onOpen,
+    setMessage,
+    onCloseKeepData,
+  }
 }
