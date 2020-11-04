@@ -7,7 +7,7 @@ const { getAxios } = req()
 
 export function useGetArticleList() {
   const [articleList, setArticleList] = useState([])
-  const { execute, value } = useAsync(getArticleList)
+  const { execute, pending, value } = useAsync(getArticleList)
 
   useEffect(() => {
     if (value) return setArticleList(value.articles)
@@ -20,5 +20,6 @@ export function useGetArticleList() {
   return {
     articleList,
     setArticleList,
+    pending,
   }
 }

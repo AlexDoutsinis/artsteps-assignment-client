@@ -52,8 +52,10 @@ function App() {
           <Grid item xs={12} sm={8}>
             <Switch>
               <Route exact path="/">
-                <ArticleList setReRender={setReRender} reRender={reRender} />
-                <Pagination />
+                <Grid container direction="column" alignItems="center">
+                  <ArticleList setReRender={setReRender} reRender={reRender} />
+                  <Pagination />
+                </Grid>
               </Route>
               <Route path="/articles/:slug">
                 <ArticleDetails />
