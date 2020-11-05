@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CategoryList from './components/CategoryList'
 import ArticleList from './components/ArticleList'
 import styled from 'styled-components'
