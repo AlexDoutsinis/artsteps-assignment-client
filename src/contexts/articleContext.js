@@ -27,6 +27,8 @@ export function ArticleContextProvider({ children }) {
     setPage,
     fetchArticleList,
     filterByCategory,
+    searchTerm,
+    filterByText,
   } = useGetArticleList()
 
   return (
@@ -45,6 +47,8 @@ export function ArticleContextProvider({ children }) {
         isAlertOpen,
         setIsAlertOpen,
         filterByCategory,
+        searchTerm,
+        filterByText,
       }}
     >
       {children}

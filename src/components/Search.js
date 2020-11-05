@@ -3,8 +3,11 @@ import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import { useArticleContext } from '../contexts/articleContext'
 
 function Search() {
+  const { searchTerm, filterByText } = useArticleContext()
+
   return (
     <>
       <TextFieldStyled
@@ -16,6 +19,8 @@ function Search() {
             </InputAdornment>
           ),
         }}
+        value={searchTerm}
+        onChange={e => filterByText(e.target.value)}
       />
     </>
   )
