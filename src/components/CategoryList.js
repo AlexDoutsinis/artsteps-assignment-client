@@ -10,7 +10,7 @@ function CategoryList() {
   return (
     <Grid container spacing={1}>
       {categoryList.map(category => (
-        <Category key={category._id} categoryName={category.name} />
+        <Category key={category._id} category={category} />
       ))}
     </Grid>
   )

@@ -28,7 +28,7 @@ function Modal(props) {
           Cancel
         </Button>
         <Button onClick={onExecute} color="primary">
-          Create
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>

@@ -156,6 +156,6 @@ const DescStyled = styled.p`
 
 const TextAreaStyled = styled(TextField)`
   textarea {
-    min-height: 200px;
+    min-height: 300px;
   }
 `

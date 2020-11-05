@@ -10,20 +10,28 @@ export function useGetArticleList() {
   const [totalPages, setTotalPages] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [page, setPage] = useState(1)
+  const [selectedCategoryId, setSelectedCategoryId] = useState('')
   const { execute, pending, value } = useAsync(getArticleList)
 
   useEffect(() => {
     if (value) {
       setTotalPages(value.totalPages)
       setCurrentPage(value.currentPage)
+      setArticleList(value)
       return setArticleList(value.articles)
     }
     execute()
-  }, [value, page])
+  }, [value, page, selectedCategoryId])
 
   async function getArticleList() {
-    return await getAxios('articles', { page })
+    return await getAxios('articles', { page, categoryId: selectedCategoryId })
   }
+
+  function filterByCategory(id) {
+    setSelectedCategoryId(id)
+    execute()
+  }
+
   return {
     articleList,
     totalPages,
@@ -32,5 +40,6 @@ export function useGetArticleList() {
     pending,
     setPage,
     fetchArticleList: execute,
+    filterByCategory,
   }
 }

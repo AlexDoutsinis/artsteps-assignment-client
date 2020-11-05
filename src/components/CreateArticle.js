@@ -132,6 +132,6 @@ const ButtonStyled = styled(Button)`
 
 const TextAreaStyled = styled(TextField)`
   textarea {
-    min-height: 200px;
+    min-height: 300px;
   }
 `
