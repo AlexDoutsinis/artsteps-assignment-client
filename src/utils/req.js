@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURl = 'http://localhost:4000/api'
+const baseURl = 'https://artsteps-assignment-rest-api.herokuapp.com/api'
 
 function httpRequest({ method, url, payload = {} }) {
   return axios[method](url, payload)
