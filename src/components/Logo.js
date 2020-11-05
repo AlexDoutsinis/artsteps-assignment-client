@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 function Header() {
   return (
     <LogoStyled variant="h4" component="h1">
-      Artsteps
+      <a href="/">Artsteps</a>
     </LogoStyled>
   )
 }
@@ -15,4 +15,8 @@ export default Header
 // Styles
 const LogoStyled = styled(Typography)`
   margin-bottom: 2rem;
+
+  a {
+    color: inherit;
+  }
 `

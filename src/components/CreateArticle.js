@@ -111,7 +111,7 @@ function CreateArticle() {
           autoFocus
           margin="dense"
           id="name"
-          label="Content"
+          label="Content (supports markdown)"
           type="text"
           fullWidth
           value={content}

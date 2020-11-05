@@ -118,7 +118,7 @@ function Article({ article, showDeleteMessage }) {
           autoFocus
           margin="dense"
           id="name"
-          label="Edit content"
+          label="Edit content (supports markdown)"
           type="text"
           fullWidth
           value={content}
