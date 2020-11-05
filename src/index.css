@@ -18,3 +18,9 @@ img {
 a {
   text-decoration: none;
 }
+
+.markdown {
+  font-size: 16px;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}

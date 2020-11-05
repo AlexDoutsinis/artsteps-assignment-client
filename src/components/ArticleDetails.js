@@ -32,7 +32,7 @@ function ArticleDetails() {
         <p>Published {new Date(article.createdAt).toDateString()}</p>
       </Grid>
       <Grid item xs={12}>
-        <ReactMarkdown>{article.content}</ReactMarkdown>
+        <ReactMarkdown className="markdown">{article.content}</ReactMarkdown>
       </Grid>
     </Grid>
   )
